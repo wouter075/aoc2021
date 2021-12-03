@@ -26,7 +26,7 @@ namespace day3
 
             foreach (var gc in gammaCount)
             {
-                if (gc > 500)
+                if (gc > lines.Length / 2)
                 {
                     gamma += "1";
                     epsilon += "0";
@@ -40,8 +40,7 @@ namespace day3
 
             var gammaDec = Convert.ToInt64(gamma, 2);
             var epsilonDec = Convert.ToInt64(epsilon, 2);
-            var calc = gammaDec * epsilonDec;
-            Console.WriteLine($"Part 1 {calc}");
+            Console.WriteLine($"Part 1: {gammaDec * epsilonDec}");
 
             List<string> newList = lines.OfType<string>().ToList();
 
@@ -60,10 +59,7 @@ namespace day3
                 for (int x = 0; x < lines[0].Length; x++)
                 {
                     newList = PopCo2(newList, x);
-                    if (newList.Count == 1)
-                    {
-                        break;
-                    }
+                    if (newList.Count == 1) break;
                 }
             }
             var o2Dec = Convert.ToInt64(newList[0], 2);
@@ -71,7 +67,7 @@ namespace day3
             Console.WriteLine($"Part 2: {oxygenDec * o2Dec}");
         }
 
-        static List<String> PopOxygen(List<string> lines, int bit)
+        static List<string> PopOxygen(List<string> lines, int bit)
         {
             // count the numbers of the bit:
             var mostCommon = '0';
@@ -79,17 +75,11 @@ namespace day3
             var zeroCount = lines.Count - oneCount;
 
             // determine the most common bit
-            if (oneCount > zeroCount)
-            {
-                mostCommon = '1';
-            }
-
+            if (oneCount > zeroCount) mostCommon = '1';
+            
             // if they are the same, 1 wins
-            if (oneCount == zeroCount)
-            {
-                mostCommon = '1';
-            }
-
+            if (oneCount == zeroCount) mostCommon = '1';
+            
             // filter the list and push back
             return lines.Where(line => line[bit] == mostCommon).ToList();
         }
@@ -99,15 +89,9 @@ namespace day3
             var leastCommon = '0';
             var oneCount = lines.Count(line => line[bit] == '1');
             var zeroCount = lines.Count - oneCount;
-            if (oneCount < zeroCount)
-            {
-                leastCommon = '1';
-            }
-
-            if (oneCount == zeroCount)
-            {
-                leastCommon = '0';
-            }
+            
+            if (oneCount < zeroCount) leastCommon = '1';
+            if (oneCount == zeroCount) leastCommon = '0';
 
             return lines.Where(line => line[bit] == leastCommon).ToList();
         }
