@@ -112,17 +112,12 @@ namespace day4
                 }
             }
             // part #1
-            foreach (var board in boards.Where(board => board.Win == 0))
-            {
-                Console.WriteLine($"Part 1: {board.Answer}");
-            }
+            var p1 = boards.First(board => board.Win == 0);
+            Console.WriteLine($"Part 1: {p1.Answer}");
             
             // part #2
-            var maxBoard = boards.Max(board => board.Win);
-            foreach (var board in boards.Where(board => board.Win == maxBoard))
-            {
-                Console.WriteLine($"Part 2: {board.Answer}");
-            }
+            var p2 = boards.First(board => board.Win == boards.Max(b => b.Win));
+            Console.WriteLine($"Part 2: {p2.Answer}");
         }
     }
 }
