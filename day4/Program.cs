@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace day4
@@ -21,23 +22,16 @@ namespace day4
             _numbers.Add(number);
             
             // lets check if we have a winner:
-            
             // rows:
             for (var r = 0; r < _board.Count; r += 5)
             {
                 var rowWin = 0;
                 for (var c = r; c < r + 5; c++)
                 {
-                    if (_numbers.Contains(_board[c]))
-                    {
-                        rowWin++;
-                    }
+                    if (_numbers.Contains(_board[c])) rowWin++;
                 }
 
-                if (rowWin == 5)
-                {
-                    return true;
-                }
+                if (rowWin == 5) return true;
             }
             
             // cols:
@@ -46,16 +40,10 @@ namespace day4
                 var colWin = 0;
                 for (var r = c; r < _board.Count; r += 5)
                 {
-                    if (_numbers.Contains(_board[r]))
-                    {
-                        colWin++;
-                    }
+                    if (_numbers.Contains(_board[r])) colWin++;
                 }
 
-                if (colWin == 5)
-                {
-                    return true;
-                }
+                if (colWin == 5) return true;
             }
             
             return false;
@@ -70,6 +58,8 @@ namespace day4
     {
         static void Main()
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             var lines = System.IO.File.ReadAllLines(@"../../../day4.txt");
             var boards = new List<Board>();
 
@@ -114,6 +104,9 @@ namespace day4
             // part #2
             var p2 = boards.First(board => board.Win == boards.Max(b => b.Win));
             Console.WriteLine($"Part 2: {p2.Answer}");
+            
+            sw.Stop();
+            Console.WriteLine($"Running time: {sw.ElapsedMilliseconds}ms");
         }
     }
 }
