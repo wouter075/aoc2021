@@ -10,11 +10,7 @@ namespace day4
         private List<int> _numbers = new List<int>();
         public int Win = -1;
         public int Answer = -1;
-
-        public Board()
-        {
-            
-        }
+        
         public Board(List<int> board)
         {
             _board = board;
