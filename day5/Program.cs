@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualBasic.FileIO;
 
 namespace day5
 {
@@ -34,7 +35,6 @@ namespace day5
                 grid.Add(gridRow);
             }
             
-            // Console.WriteLine($"Grid: {grid.Count}");
             // Parse input
             for (var x = 0; x < coords.Count; x += 4)
             {   
@@ -54,26 +54,47 @@ namespace day5
                     {
                         grid[yCount][coords[x]]++;
                     }
-                }
-                
-                // horizontal
-                if (coords[x + 1] != coords[x + 3]) continue;
-                var x1 = coords[x];
-                var x2 = coords[x + 2];
-
-                if (x1 >= x2)
+                } else if (coords[x + 1] == coords[x + 3])
                 {
-                    x1 = coords[x + 2];
-                    x2 = coords[x];
-                }
+                    var x1 = coords[x];
+                    var x2 = coords[x + 2];
 
-                for (var xCount = x1; xCount <= x2; xCount++)
+                    if (x1 >= x2)
+                    {
+                        x1 = coords[x + 2];
+                        x2 = coords[x];
+                    }
+
+                    for (var xCount = x1; xCount <= x2; xCount++)
+                    {
+                        grid[coords[x + 1]][xCount]++;
+                    }              
+                }
+                else
                 {
-                    grid[coords[x + 1]][xCount]++;
+                    // skip this for part 1
+                    // diagonal
+                    var startX = coords[x];
+                    var startY = coords[x + 1];
+                    var endX = coords[x + 2];
+                    var endY = coords[x + 3];
+
+                    int dx = Math.Sign(endX - startX);
+                    int dy = Math.Sign(endY - startY);
+                    int steps = Math.Max(Math.Abs(endX - startX), Math.Abs(endY - startY)) + 1; 
+
+                    int sX = startX;
+                    int sY = startY;
+
+                    grid[sY][sX]++;
+                    for (int i = 1; i < steps; ++i) {
+                        sX = sX == endX ? endX : sX + dx;
+                        sY = sY == endY ? endY : sY + dy;
+                        grid[sY][sX]++;
+                    }
                 }
             }
-            
-            var point = grid.Sum(t => t.Count(t1 => t1 > 1));
+            var point = grid.Sum(t => t.Count(t1 => t1 >= 2));
 
             Console.WriteLine($"Part 1: {point}");
         }

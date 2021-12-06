@@ -8,10 +8,10 @@ namespace day3
     {
         static void Main(string[] args)
         {
-            var lines = System.IO.File.ReadAllLines(@"../../../day3.txt");
+            var lines = System.IO.File.ReadAllLines(@"../../../day3.txt").ToList();
             var gamma = "";
             var epsilon = "";
-            var gammaCount = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            var gammaCount = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
             foreach (var line in lines)
             {
@@ -26,7 +26,7 @@ namespace day3
 
             foreach (var gc in gammaCount)
             {
-                if (gc > lines.Length / 2)
+                if (gc > lines.Count / 2)
                 {
                     gamma += "1";
                     epsilon += "0";
@@ -42,7 +42,7 @@ namespace day3
             var epsilonDec = Convert.ToInt64(epsilon, 2);
             Console.WriteLine($"Part 1: {gammaDec * epsilonDec}");
 
-            List<string> newList = lines.OfType<string>().ToList();
+            List<string> newList = lines;
 
             while (newList.Count != 1)
             {
@@ -52,8 +52,8 @@ namespace day3
                 }
             }
             var oxygenDec = Convert.ToInt64(newList[0], 2);
-            
-            newList = lines.OfType<string>().ToList();
+
+            newList = lines;
             while (newList.Count != 1)
             {
                 for (int x = 0; x < lines[0].Length; x++)
