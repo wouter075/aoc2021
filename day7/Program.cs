@@ -19,7 +19,7 @@ namespace day7
                 foreach (var steps in values.Select(t => Math.Abs(t - y)))
                 {
                     tmp1 += steps;
-                    for (var i = 0; i <= steps; i++) tmp2 += i;
+                    tmp2 += steps * (steps + 1) / 2;
                 }
                 if (tmp1 < fuel1) fuel1 = tmp1;
                 if (tmp2 < fuel2) fuel2 = tmp2;
