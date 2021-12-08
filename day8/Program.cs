@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace day8
@@ -19,8 +18,14 @@ namespace day8
             knownSegments[3] = 7;
             knownSegments[7] = 8;
 /*
-	segmenten							
-	cijfer	uniek	a	b	c	d	e	f	g	seg:
+	segments
+		a				0
+	b		c		1		2
+		d				3
+	e		f		4		5
+		g				6
+								
+	number	unique	a	b	c	d	e	f	g	seg:
 	0		        0	1	2		4	5	6	6
 	1	        v			2			5		2
 	2		        0		2	3	4		6	5
@@ -38,33 +43,35 @@ namespace day8
 
             for (var index = 0; index < easyDigits.Count; index++)
             {
-                var easyDigit = easyDigits[index];
-                var otherDigits = firstDigits[index];
-                foreach (var ed in easyDigit)
+	            var easyDigit = easyDigits[index];
+                // sort all
+                // firstDigit
+                var firstDigit = firstDigits[index];
+                for (var i = 0; i < firstDigit.Length; i++)
                 {
-                    if (!knownDigits.Contains(ed.Length))
-                    {
-                        Console.WriteLine($"{String.Concat(ed.OrderBy(c => c))} ------");
-                        foreach (var fd in otherDigits)
-                        {
-                            if (!knownDigits.Contains(fd.Length))
-                            {
-                                Console.WriteLine(String.Concat(fd.OrderBy(c => c)));                                
-                            }
-                            
-                        }
-
-                        Console.WriteLine();
-                        sum += "_";
-                    }
-                    else
-                    {
-                        sum += knownSegments[ed.Length];
-                    }
+	                firstDigit[i] = string.Concat(firstDigit[i].OrderBy(x => x));
                 }
 
+                // easyDigit
+                for (var i = 0; i < easyDigit.Length; i++)
+                {
+	                easyDigit[i] = string.Concat(easyDigit[i].OrderBy(x => x));
+                }
+
+                foreach (var ed in easyDigit)
+                {
+	                // Known segments:
+	                if (knownDigits.Contains(ed.Length))
+	                {
+		                sum += knownSegments[ed.Length];
+	                }
+	                else
+	                {
+		                // need all with the same lenght:
+		                sum += "_";
+	                }
+                }
                 sum += " ";
-                Console.WriteLine();
             }
             
             Console.WriteLine($"Part 1: {part1}");
