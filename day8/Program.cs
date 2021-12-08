@@ -39,10 +39,22 @@ namespace day8
             for (var index = 0; index < easyDigits.Count; index++)
             {
                 var easyDigit = easyDigits[index];
+                var otherDigits = firstDigits[index];
                 foreach (var ed in easyDigit)
                 {
                     if (!knownDigits.Contains(ed.Length))
                     {
+                        Console.WriteLine($"{String.Concat(ed.OrderBy(c => c))} ------");
+                        foreach (var fd in otherDigits)
+                        {
+                            if (!knownDigits.Contains(fd.Length))
+                            {
+                                Console.WriteLine(String.Concat(fd.OrderBy(c => c)));                                
+                            }
+                            
+                        }
+
+                        Console.WriteLine();
                         sum += "_";
                     }
                     else
