@@ -14,6 +14,7 @@ namespace day9
             var grid = new int[maxRow, maxCol];
             var part1 = 0;
             var part2 = 0;
+            var first = true;
 
             for (var index = 0; index < lines.Length; index++)
             {
@@ -88,18 +89,17 @@ namespace day9
                     if (maxSurrounding == checkLower)
                     {
                         part1 += grid[l, c] + 1;
-                        // Console.WriteLine($"{l}, {c}: {grid[l, c]}");
+                        
                         // part 2:
                         // x axis (col):
                         var basinCount = 1; // Start at 1, because the middle is also a part
-                        var check = grid[l, c];
-                        // -->
+
                         for (var x = c + 1; x < maxCol; x++)
                         {
-                            // Console.WriteLine($"--> {grid[l, x]}, ");
                             if (grid[l, x] < 9)
                             {
                                 basinCount++;
+                                Console.WriteLine($"a{l},{x} = {grid[l, x]}");
                             }
                             else
                             {
@@ -112,6 +112,7 @@ namespace day9
                                 if (grid[y, x] < 9)
                                 {
                                     basinCount++;
+                                    Console.WriteLine($"b{y},{x} = {grid[y, x]}");
                                 }
                                 else
                                 {
@@ -124,44 +125,7 @@ namespace day9
                                 if (grid[y, x] < 9)
                                 {
                                     basinCount++;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        // <--
-                        for (var x = c - 1; x >= 0; x--)
-                        {
-                            // Console.WriteLine($"<-- {grid[l, x]}, ");
-                            if (grid[l, x] < 9)
-                            {
-                                basinCount++;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                            
-                            // Up:
-                            for (var y = l + 1; y < maxRow; y++)
-                            {
-                                if (grid[y, x] < 9)
-                                {
-                                    basinCount++;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                            // Down:
-                            for (var y = l - 1; y >= 0; y--)
-                            {
-                                if (grid[y, x] < 9)
-                                {
-                                    basinCount++;
+                                    Console.WriteLine($"c{y},{x} = {grid[y, x]}");
                                 }
                                 else
                                 {
@@ -170,6 +134,79 @@ namespace day9
                             }
                         }
 
+                        
+                        // <--
+                        for (var x = c - 1; x >= 0; x--)
+                        {
+                            if (grid[l, x] < 9)
+                            {
+                                basinCount++;
+                                Console.WriteLine($"d{l},{x} = {grid[l, x]}");
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            // Up:
+                            for (var y = l + 1; y < maxRow; y++)
+                            {
+                                if (grid[y, x] < 9)
+                                {
+                                    basinCount++;
+                                    Console.WriteLine($"e{y},{x} = {grid[y, x]}");
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            // Down:
+                            for (var y = l - 1; y >= 0; y--)
+                            {
+                                if (grid[y, x] < 9)
+                                {
+                                    basinCount++;
+                                    Console.WriteLine($"f{y},{x} = {grid[y, x]}");
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            Console.WriteLine();
+                            
+                        }
+
+                        Console.WriteLine($"c: {c}");
+                        // collumn stays the same:
+                        // row(l) needs to change: y
+                        // up:
+                        for (var y = l + 1; y < maxRow; y++)
+                        {
+                            if (grid[y, c] < 9)
+                            {
+                                Console.WriteLine($"g{y}, {c}: {grid[y, c]}");
+                                basinCount++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        // down:
+                        for (var y = l - 1; y >= 0; y--)
+                        {
+                            if (grid[y, c] < 9)
+                            {
+                                Console.WriteLine($"h{y}, {c}: {grid[y, c]}");
+                                basinCount++;
+                            }
+                            else
+                            {
+                                break;
+                            }                            
+                        }
+                        
                         Console.WriteLine($"basinCount: {basinCount}");
                     }
                 }
