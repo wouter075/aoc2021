@@ -24,8 +24,7 @@ namespace day7
                 if (tmp1 < fuel1) fuel1 = tmp1;
                 if (tmp2 < fuel2) fuel2 = tmp2;
             }
-            Console.WriteLine($"Part 1: {fuel1}");
-            Console.WriteLine($"Part 2: {fuel2}");
+            Console.WriteLine($"Part 1: {fuel1}\nPart 2: {fuel2}");
         }
     }
 }
