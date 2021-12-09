@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace day9
@@ -12,7 +13,7 @@ namespace day9
             var maxRow = lines.Length;
             var grid = new int[maxRow, maxCol];
             var part1 = 0;
-            ListDictionary basinLocations = new ListDictionary();
+            var part2 = 0;
 
             for (var index = 0; index < lines.Length; index++)
             {
@@ -87,13 +88,95 @@ namespace day9
                     if (maxSurrounding == checkLower)
                     {
                         part1 += grid[l, c] + 1;
-                        basinLocations.Add(l, c);
+                        // Console.WriteLine($"{l}, {c}: {grid[l, c]}");
+                        // part 2:
+                        // x axis (col):
+                        var basinCount = 1; // Start at 1, because the middle is also a part
+                        var check = grid[l, c];
+                        // -->
+                        for (var x = c + 1; x < maxCol; x++)
+                        {
+                            // Console.WriteLine($"--> {grid[l, x]}, ");
+                            if (grid[l, x] < 9)
+                            {
+                                basinCount++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            
+                            // Up:
+                            for (var y = l + 1; y < maxRow; y++)
+                            {
+                                if (grid[y, x] < 9)
+                                {
+                                    basinCount++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            // Down:
+                            for (var y = l - 1; y >= 0; y--)
+                            {
+                                if (grid[y, x] < 9)
+                                {
+                                    basinCount++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        // <--
+                        for (var x = c - 1; x >= 0; x--)
+                        {
+                            // Console.WriteLine($"<-- {grid[l, x]}, ");
+                            if (grid[l, x] < 9)
+                            {
+                                basinCount++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            
+                            // Up:
+                            for (var y = l + 1; y < maxRow; y++)
+                            {
+                                if (grid[y, x] < 9)
+                                {
+                                    basinCount++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            // Down:
+                            for (var y = l - 1; y >= 0; y--)
+                            {
+                                if (grid[y, x] < 9)
+                                {
+                                    basinCount++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        Console.WriteLine($"basinCount: {basinCount}");
                     }
                 }
             }
 
             Console.WriteLine($"Part 1: {part1}");
-            
+
         }
     }
 }
